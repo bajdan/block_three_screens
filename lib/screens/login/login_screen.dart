@@ -38,19 +38,21 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: LoginScreenInheritedWidget(
-          bloc: bloc,
-          child: BlocBuilder<LoginBloc, LoginState>(
-              bloc: bloc,
-              builder: (context, snapshot) {
-                if (snapshot is LoginInitialState) {
-                  return const LoginScreenData();
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              }),
+        child: SingleChildScrollView(
+          child: LoginScreenInheritedWidget(
+            bloc: bloc,
+            child: BlocBuilder<LoginBloc, LoginState>(
+                bloc: bloc,
+                builder: (context, snapshot) {
+                  if (snapshot is LoginInitialState) {
+                    return const LoginScreenData();
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
+          ),
         ),
       ),
     );
