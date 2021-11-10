@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:new_folder/managers/shared_prefs_manager.dart';
+import 'package:new_folder/repository/user_repository.dart';
 import 'package:new_folder/screens/login/bloc/login_bloc.dart';
 import 'package:new_folder/screens/login/bloc/login_state.dart';
 import 'package:new_folder/screens/login/widgets/alternative_buttons/login_alternative_buttons.dart';
@@ -22,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    bloc = LoginBloc(LoginInitialState());
+    bloc = LoginBloc(LoginInitialState(), UserRepository(sharedPrefs: SharedPrefsManager()));
     bloc.stream.listen((state) {
       if (state is LoginSuccessfulState) {
         Navigator.pushReplacementNamed(context, '/home');
@@ -47,8 +49,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   if (snapshot is LoginInitialState) {
                     return const LoginScreenData();
                   } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
                     );
                   }
                 }),
